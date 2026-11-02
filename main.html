@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Kindred Hearts & Hands">
+    <title>Kindred | Hearts &amp; Hands</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --green: #2d5a27;
+            --dark: #1f3024;
+            --orange: #d97706;
+            --sand: #fdfbf7;
+            --ink: #26332a;
+            --muted: #6b716b;
+            --line: #e5e4dc;
+        }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { margin: 0; background: var(--sand); color: var(--ink); font-family: "DM Sans", sans-serif; -webkit-font-smoothing: antialiased; }
+        button, a, input, textarea { font: inherit; }
+        button { cursor: pointer; }
+        a { text-decoration: none; color: inherit; }
+        .app-shell { overflow: hidden; }
+        .page-width { max-width: 1240px; margin: 0 auto; padding-left: 32px; padding-right: 32px; }
+        .site-header { height: 82px; display: flex; align-items: center; justify-content: space-between; max-width: 1240px; margin: auto; padding: 0 32px; position: relative; z-index: 5; }
+        .brand { display: flex; align-items: center; gap: 11px; color: var(--green); font-size: 12px; line-height: 1.05; font-weight: 700; letter-spacing: .03em; }
+        .brand em { font-family: 'Playfair Display', serif; font-weight: 500; font-size: 15px; letter-spacing: 0; }
+        .brand-mark { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: #e8eee2; color: var(--green); }
+        .nav-links { display: flex; align-items: center; gap: 32px; font-size: 13px; font-weight: 600; color: #59615a; }
+        .nav-links a { transition: color .2s; }
+        .nav-links a:hover { color: var(--green); }
+        .nav-cta, .button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; border: 0; font-size: 13px; font-weight: 700; transition: transform .2s, background-color .2s, color .2s; }
+        .nav-cta { background: transparent; color: var(--green); border-bottom: 1px solid var(--green); padding: 8px 0; }
+        .button { border-radius: 4px; padding: 15px 20px; }
+        .button:hover, .nav-cta:hover { transform: translateY(-2px); }
+        .button-dark { background: var(--green); color: #fff; }
+        .button-dark:hover { background: #1e3c1a; }
+        .button-quiet { background: transparent; color: var(--green); padding-left: 4px; }
+        .button-accent { background: #e9a23b; color: #3d270d; }
+        .button-light { background: #fff; color: var(--green); }
+        .mobile-menu { display: none; background: none; border: 0; color: var(--green); }
+        .hero { display: grid; grid-template-columns: 1fr 1.03fr; gap: 92px; padding-top: 70px; padding-bottom: 102px; }
+        .hero-copy { padding: 42px 0 0 34px; }
+        .hero-kicker, .eyebrow { color: var(--orange); font-size: 11px; text-transform: uppercase; letter-spacing: .16em; font-weight: 700; }
+        .hero-kicker { display: flex; align-items: center; gap: 10px; }
+        .line { width: 28px; height: 1px; background: var(--orange); }
+        h1, h2, h3, p { margin-top: 0; }
+        h1, h2 { font-family: 'Playfair Display', serif; font-weight: 500; line-height: .98; color: var(--green); }
+        h1 { font-size: clamp(56px, 6vw, 86px); letter-spacing: -.045em; margin: 24px 0 27px; }
+        h1 em, h2 em { font-style: italic; }
+        h2 { font-size: clamp(42px, 4.2vw, 63px); letter-spacing: -.04em; margin: 18px 0 23px; }
+        .hero-lede { font-size: 16px; line-height: 1.7; color: var(--muted); max-width: 405px; }
+        .hero-actions { display: flex; align-items: center; gap: 23px; margin-top: 30px; }
+        .hero-proof { display: flex; align-items: center; gap: 14px; margin-top: 63px; color: var(--muted); font-size: 11px; line-height: 1.45; }
+        .hero-proof strong { color: var(--ink); font-size: 12px; }
+        .avatar-stack { display: flex; }
+        .avatar-stack span { display: grid; place-items: center; width: 29px; height: 29px; border-radius: 50%; border: 2px solid var(--sand); margin-left: -7px; background: #c8dbbe; color: var(--green); font-size: 8px; font-weight: 700; }
+        .avatar-stack span:first-child { margin-left: 0; background: #e5b28e; }
+        .avatar-stack span:nth-child(2) { background: #b9c9dd; }
+        .avatar-stack span:nth-child(3) { background: #e4d08b; }
+        .avatar-stack span:last-child { background: var(--green); color: #fff; }
+        .hero-visual { position: relative; min-height: 500px; }
+        .hero-photo { height: 500px; position: relative; margin-right: 62px; }
+        .hero-photo:before { content: ''; position: absolute; inset: -15px 15px 15px -15px; border: 1px solid #cfd9ca; z-index: -1; }
+        .hero-photo img, .local-image img { width: 100%; height: 100%; object-fit: cover; }
+        .photo-caption { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(31, 48, 36, .84); color: #fff; padding: 15px 18px; font-size: 11px; display: flex; align-items: center; gap: 9px; }
+        .photo-caption svg { margin-left: auto; }
+        .caption-dot { width: 7px; height: 7px; border-radius: 50%; background: #efb048; }
+        .hero-note { position: absolute; right: -5px; bottom: 34px; width: 194px; padding: 25px 18px 20px; background: #e9a23b; color: #3c2e1b; box-shadow: 0 10px 25px #73501925; }
+        .hero-note span { font: 48px Georgia; color: #fff; line-height: 20px; }
+        .hero-note p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 16px; line-height: 1.23; margin: 5px 0 14px; }
+        .hero-note small { font-size: 8px; text-transform: uppercase; letter-spacing: .13em; }
+        .impact-strip { background: #e8eee2; border-top: 1px solid #dfe7d9; border-bottom: 1px solid #dfe7d9; }
+        .impact-inner { display: flex; align-items: center; justify-content: space-between; padding-top: 25px; padding-bottom: 25px; }
+        .impact-inner > div:not(.impact-callout) { display: flex; align-items: baseline; gap: 13px; }
+        .impact-inner strong { font-family: 'Playfair Display', serif; font-size: 31px; color: var(--green); font-weight: 500; }
+        .impact-inner span { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: #687266; }
+        .impact-callout { display: flex; align-items: center; gap: 12px; color: var(--green); font: italic 14px 'Playfair Display', serif; }
+        .impact-callout svg { width: 15px; }
+        .section { padding-top: 119px; padding-bottom: 125px; }
+        .section-heading { display: flex; justify-content: space-between; align-items: end; margin-bottom: 54px; }
+        .section-heading > p { max-width: 310px; margin: 0 50px 9px 20px; color: var(--muted); font-size: 14px; line-height: 1.65; }
+        .filter-row { display: flex; gap: 9px; border-bottom: 1px solid var(--line); padding-bottom: 15px; margin-bottom: 30px; }
+        .filter { border: 1px solid var(--line); background: transparent; color: var(--muted); border-radius: 50px; padding: 9px 15px; font-size: 11px; transition: .2s; }
+        .filter span { margin-left: 7px; opacity: .6; }
+        .filter.active, .filter:hover { background: var(--green); color: #fff; border-color: var(--green); }
+        .opportunity-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .opportunity-card { background: #fff; border: 1px solid #eeeae1; box-shadow: 0 8px 30px rgb(0 0 0 / 4%); transition: opacity 0.3s; }
+        .opportunity-card.hidden { display: none; }
+        .card-image { height: 205px; position: relative; overflow: hidden; }
+        .card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+        .opportunity-card:hover .card-image img { transform: scale(1.04); }
+        .image-tag { position: absolute; top: 14px; left: 14px; padding: 7px 10px; background: #fdfbf7ed; color: var(--green); font-size: 9px; text-transform: uppercase; letter-spacing: .1em; }
+        .card-content { padding: 21px 21px 23px; }
+        .card-meta { display: flex; gap: 7px; color: var(--orange); font-size: 9px; text-transform: uppercase; letter-spacing: .12em; }
+        .card-content h3 { font: 500 26px/1.1 'Playfair Display', serif; color: var(--green); margin: 13px 0 10px; }
+        .card-content p { font-size: 12px; line-height: 1.6; color: var(--muted); min-height: 58px; }
+        .card-details { display: flex; flex-direction: column; gap: 7px; padding: 15px 0; border-top: 1px solid var(--line); font-size: 10px; color: #6a7169; }
+        .card-details span { display: flex; align-items: center; gap: 7px; }
+        .card-details svg { color: var(--orange); }
+        .text-button { border: 0; background: none; padding: 0; display: inline-flex; align-items: center; gap: 8px; color: var(--green); font-size: 11px; font-weight: 700; }
+        .text-button svg { transition: transform .2s; }
+        .text-button:hover svg { transform: translate(3px, -3px); }
+        .local-section { background: #f0eee5; padding: 100px 0; }
+        .local-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 105px; align-items: center; }
+        .local-image { height: 500px; position: relative; padding: 13px; }
+        .local-image:before { content: ''; position: absolute; inset: 0; background: #e0a151; }
+        .local-image img { position: relative; }
+        .image-stamp { position: absolute; bottom: 30px; left: -20px; padding: 14px 21px; background: #fff; color: var(--green); font: italic 15px/1.3 'Playfair Display', serif; box-shadow: 0 8px 20px #57452b20; }
+        .image-stamp strong { font-size: 19px; }
+        .local-copy p { max-width: 435px; color: var(--muted); font-size: 14px; line-height: 1.75; }
+        .local-list { margin: 34px 0 30px; border-top: 1px solid #d6d8cf; }
+        .local-list > div { display: flex; gap: 15px; padding: 17px 0; border-bottom: 1px solid #d6d8cf; }
+        .list-icon { width: 31px; height: 31px; border-radius: 50%; background: #dbe8d6; color: var(--green); display: grid; place-items: center; }
+        .local-list strong, .local-list small { display: block; }
+        .local-list strong { font-size: 12px; color: var(--ink); margin-bottom: 4px; }
+        .local-list small { font-size: 11px; color: var(--muted); }
+        .ideas-section { padding-top: 120px; padding-bottom: 130px; }
+        .ideas-heading { margin-bottom: 60px; }
+        .ideas-heading > div:last-child { max-width: 315px; }
+        .ideas-heading .button { margin-top: 19px; }
+        .ideas-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 70px; }
+        .idea-intro { padding-top: 25px; }
+        .idea-orbit { width: 125px; height: 125px; border: 1px dashed #c4d5bd; border-radius: 50%; display: grid; place-items: center; position: relative; margin: 0 0 27px 20px; }
+        .idea-orbit span { width: 60px; height: 60px; border-radius: 50%; background: #e8eee2; display: grid; place-items: center; color: var(--green); }
+        .idea-orbit i { position: absolute; width: 9px; height: 9px; border-radius: 50%; background: var(--orange); }
+        .idea-orbit i:nth-child(2) { top: 4px; left: 16px; }
+        .idea-orbit i:nth-child(3) { right: 3px; top: 54px; background: #a7c596; }
+        .idea-orbit i:nth-child(4) { bottom: 12px; left: 19px; background: #dda24a; }
+        .idea-intro p { font: italic 17px/1.35 'Playfair Display', serif; color: var(--green); max-width: 200px; }
+        .idea-count { font-size: 10px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-top: 37px; }
+        .idea-count strong { color: var(--orange); font-size: 23px; font-family: 'Playfair Display', serif; margin-right: 6px; }
+        .idea-list { border-top: 1px solid var(--line); }
+        .idea-card { display: grid; grid-template-columns: 49px 1fr auto; gap: 20px; padding: 25px 0; border-bottom: 1px solid var(--line); align-items: start; }
+        .idea-number { font: italic 19px 'Playfair Display', serif; color: #a4b69d; }
+        .idea-category { font-size: 9px; color: var(--orange); text-transform: uppercase; letter-spacing: .12em; }
+        .idea-main h3 { font: 500 22px 'Playfair Display', serif; color: var(--green); margin: 8px 0 7px; }
+        .idea-main p { font-size: 12px; color: var(--muted); margin-bottom: 10px; line-height: 1.45; }
+        .idea-main small { font-size: 10px; color: #889187; }
+        .vote-button { border: 1px solid var(--line); background: transparent; color: #8d978b; min-width: 59px; padding: 8px 7px; display: flex; align-items: center; gap: 4px; flex-wrap: wrap; justify-content: center; transition: .2s; }
+        .vote-button strong { font-size: 12px; }
+        .vote-button span { font-size: 8px; width: 100%; }
+        .vote-button:hover, .vote-button.voted { border-color: var(--orange); color: var(--orange); }
+        .vote-button.voted svg { fill: currentColor; }
+        .closing-section { background: var(--green); color: #fff; text-align: center; padding: 115px 20px 120px; position: relative; }
+        .closing-section:before { content: '✳'; position: absolute; left: 11%; top: 63px; font-size: 25px; color: #e9a23b; }
+        .closing-section:after { content: '✽'; position: absolute; right: 13%; bottom: 63px; font-size: 23px; color: #b5cf9d; }
+        .closing-inner h2 { color: #fff; font-size: clamp(44px, 5vw, 70px); margin: 18px 0 19px; }
+        .closing-inner p { color: #c2d3bd; font-size: 14px; margin-bottom: 29px; }
+        .footer { display: flex; align-items: center; justify-content: space-between; padding-top: 33px; padding-bottom: 33px; font-size: 10px; color: #869087; }
+        .footer .brand { color: var(--green); }
+
+        /* Modal styling */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; place-items: center; padding: 20px; }
+        .modal.active { display: grid; }
+        .modal-content { background: var(--sand); padding: 30px; border-radius: 8px; max-width: 500px; width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .modal-content h3 { font-family: 'Playfair Display', serif; color: var(--green); font-size: 24px; margin-bottom: 15px; }
+        .modal-field { margin-bottom: 15px; }
+        .modal-field label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 5px; color: var(--ink); }
+        .modal-field input, .modal-field textarea, .modal-field select { width: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 4px; background: #fff; }
+        .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+
+        @media(max-width:800px) {
+            .site-header { height: 72px; }
+            .mobile-menu { display: block; }
+            .nav-links { display: none; position: absolute; top: 68px; left: 15px; right: 15px; background: var(--sand); padding: 20px; box-shadow: 0 10px 30px #15221820; flex-direction: column; align-items: flex-start; gap: 20px; border-radius: 6px; }
+            .nav-links.active { display: flex; }
+            .hero { grid-template-columns: 1fr; gap: 35px; padding-top: 40px; padding-bottom: 70px; }
+            .hero-copy { padding: 0; }
+            .hero-visual { min-height: 390px; }
+            .hero-photo { height: 390px; margin-right: 38px; }
+            .hero-note { right: -5px; bottom: 15px; }
+            .impact-inner { flex-wrap: wrap; gap: 19px; }
+            .impact-callout { width: 100%; justify-content: center; }
+            .section, .ideas-section { padding-top: 75px; padding-bottom: 80px; }
+            .section-heading { display: block; margin-bottom: 35px; }
+            .section-heading > p { margin: 20px 0 0; }
+            .opportunity-grid { grid-template-columns: 1fr; }
+            .local-section { padding: 70px 0; }
+            .local-grid { grid-template-columns: 1fr; gap: 55px; }
+            .local-image { height: 390px; }
+            .ideas-layout { grid-template-columns: 1fr; gap: 30px; }
+            .idea-intro { display: flex; align-items: center; gap: 23px; padding: 0; }
+            .idea-orbit { width: 85px; height: 85px; margin: 0; }
+            .idea-orbit span { width: 43px; height: 43px; }
+            .idea-intro p { font-size: 15px; }
+            .idea-count { display: none; }
+            .idea-card { grid-template-columns: 28px 1fr auto; gap: 10px; }
+            .idea-main h3 { font-size: 19px; }
+            .footer { gap: 20px; flex-wrap: wrap; }
+            .footer > span:last-child { width: 100%; }
+            .hero-actions { flex-wrap: wrap; }
+            .page-width { padding-left: 20px; padding-right: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <div id="top" class="app-shell">
+            <header class="site-header">
+                <a class="brand" href="#top">
+                    <span class="brand-mark">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M7 20h10"></path><path d="M10 20c5.5-2.5.8-6.4 3-10"></path><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"></path><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"></path>
+                        </svg>
+                    </span>
+                    <span>Kindred<br><em>Hearts &amp; Hands</em></span>
+                </a>
+                <button type="button" class="mobile-menu" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 12h16"></path><path d="M4 18h16"></path><path d="M4 6h16"></path>
+                    </svg>
+                </button>
+                <nav class="nav-links" id="navLinks">
+                    <a href="#opportunities">Find an opportunity</a>
+                    <a href="#local">Local action</a>
+                    <a href="#ideas">Ideas board</a>
+                    <button class="nav-cta trigger-idea-modal">Share an idea 
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M7 7h10v10"></path><path d="M7 17 17 7"></path>
+                        </svg>
+                    </button>
+                </nav>
+            </header>
+
+            <main>
+                <section class="hero page-width">
+                    <div class="hero-copy">
+                        <div class="hero-kicker"><span class="line"></span>A community of doers</div>
+                        <h1>Small acts.<br><em>Shared impact.</em></h1>
+                        <p class="hero-lede">Kindred Hearts &amp; Hands connects people who care with opportunities to make their corner of the world a little kinder.</p>
+                        <div class="hero-actions">
+                            <a href="#opportunities" class="button button-dark">Find your way in 
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M7 7h10v10"></path><path d="M7 17 17 7"></path>
+                                </svg>
+                            </a>
+                            <button class="button button-quiet trigger-idea-modal">Share an idea 
+                                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="hero-proof">
+                            <div class="avatar-stack">
+                                <span>AM</span><span>JR</span><span>SK</span><span>+</span>
+                            </div>
+                            <span><strong>1,248 people</strong><br>are making a difference this month</span>
+                        </div>
+                    </div>
+                    <div class="hero-visual">
+                        <div class="hero-photo">
+                            <img alt="Volunteers planting together" src="https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&w=800&q=80">
+                            <div class="photo-caption">
+                                <span class="caption-dot"></span>This is what showing up looks like 
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M7 7h10v10"></path><path d="M7 17 17 7"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="hero-note">
+                            <span>“</span>
+                            <p>We don’t need a handful of people doing volunteering perfectly. We need millions doing it imperfectly.</p>
+                            <small>— Community principle #01</small>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="impact-strip">
+                    <div class="page-width impact-inner">
+                        <div><strong>24</strong><span>active opportunities</span></div>
+                        <div><strong>18</strong><span>local partners</span></div>
+                        <div><strong>1,248</strong><span>kindred members</span></div>
+                        <div class="impact-callout">There’s a place for you here 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 5v14"></path><path d="m19 12-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="opportunities" class="section page-width">
+                    <div class="section-heading">
+                        <div>
+                            <span class="eyebrow">Find your way in</span>
+                            <h2>Good work, in<br><em>all its forms.</em></h2>
+                        </div>
+                        <p>Whether you have an hour, a weekend, or a new idea — there’s a way to be part of something bigger.</p>
+                    </div>
+                    <div class="filter-row" id="filterRow">
+                        <button type="button" class="filter active" data-category="All">All<span>3</span></button>
+                        <button type="button" class="filter" data-category="Local">Local<span>2</span></button>
+                        <button type="button" class="filter" data-category="Organised">Organised<span>1</span></button>
+                    </div>
+                    <div class="opportunity-grid" id="opportunityGrid">
+                        <article class="opportunity-card" data-category="Local">
+                            <div class="card-image">
+                                <img alt="The Garden Commons" src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=600&q=80">
+                                <span class="image-tag">Outdoors</span>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-meta"><span>Local</span><span>·</span><span>8 places left</span></div>
+                                <h3>The Garden Commons</h3>
+                                <p>Turn an overlooked city corner into a shared garden for neighbours, pollinators, and good conversations.</p>
+                                <div class="card-details">
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg> Easton, London
+                                    </span>
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg> Every Saturday
+                                    </span>
+                                </div>
+                                <button class="text-button trigger-signup" data-title="The Garden Commons">I’m interested 
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg>
+                                </button>
+                            </div>
+                        </article>
+
+                        <article class="opportunity-card" data-category="Local">
+                            <div class="card-image">
+                                <img alt="The Sunday Food Table" src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=600&q=80">
+                                <span class="image-tag">Community care</span>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-meta"><span>Local</span><span>·</span><span>14 places left</span></div>
+                                <h3>The Sunday Food Table</h3>
+                                <p>Prepare and share warm meals with local families experiencing food insecurity. No cooking experience needed.</p>
+                                <div class="card-details">
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg> Riverside Community Hall
+                                    </span>
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg> Sunday, 18 August
+                                    </span>
+                                </div>
+                                <button class="text-button trigger-signup" data-title="The Sunday Food Table">I’m interested 
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg>
+                                </button>
+                            </div>
+                        </article>
+
+                        <article class="opportunity-card" data-category="Organised">
+                            <div class="card-image">
+                                <img alt="Learning Bridge" src="https://images.unsplash.com/photo-1542810634-71277d95dcbb?auto=format&fit=crop&w=600&q=80">
+                                <span class="image-tag">Education</span>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-meta"><span>Organised</span><span>·</span><span>20 places left</span></div>
+                                <h3>Learning Bridge</h3>
+                                <p>Support a young learner with weekly conversation practice and confidence-building activities.</p>
+                                <div class="card-details">
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg> Online · East Africa
+                                    </span>
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg> Flexible, from September
+                                    </span>
+                                </div>
+                                <button class="text-button trigger-signup" data-title="Learning Bridge">I’m interested 
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg>
+                                </button>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section id="local" class="local-section">
+                    <div class="page-width local-grid">
+                        <div class="local-image">
+                            <img alt="Volunteers preparing food" src="https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&w=800&q=80">
+                            <span class="image-stamp">Your neighbourhood<br><strong>is a starting point.</strong></span>
+                        </div>
+                        <div class="local-copy">
+                            <span class="eyebrow">Local action</span>
+                            <h2>Change feels<br><em>closer than you think.</em></h2>
+                            <p>Our local partners know their communities best. Find a project near you, meet the people behind it, and make a visible difference before lunch.</p>
+                            <div class="local-list">
+                                <div>
+                                    <span class="list-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+                                    </span>
+                                    <span><strong>Made with, not for</strong><small>Every project is led by the people it serves.</small></span>
+                                </div>
+                                <div>
+                                    <span class="list-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                                    </span>
+                                    <span><strong>Come as you are</strong><small>No experience, perfect schedule, or special skills required.</small></span>
+                                </div>
+                            </div>
+                            <a href="#opportunities" class="text-button">See local opportunities 
+                                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="ideas" class="ideas-section page-width">
+                    <div class="section-heading ideas-heading">
+                        <div>
+                            <span class="eyebrow">The idea garden</span>
+                            <h2>What should we<br><em>try next?</em></h2>
+                        </div>
+                        <div>
+                            <p>The best ideas don’t come from a boardroom. They come from paying attention, asking better questions, and sharing what you notice.</p>
+                            <button class="button button-accent trigger-idea-modal">Plant an idea 
+                                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="ideas-layout">
+                        <div class="idea-intro">
+                            <div class="idea-orbit">
+                                <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"></path><path d="M10 20c5.5-2.5.8-6.4 3-10"></path><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"></path><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"></path></svg>
+                                </span>
+                                <i></i><i></i><i></i>
+                            </div>
+                            <p><strong>Every idea matters.</strong><br>Browse what our community is imagining, then add your voice.</p>
+                            <div class="idea-count"><strong id="ideaCount">2</strong> ideas growing</div>
+                        </div>
+                        <div class="idea-list" id="ideaList">
+                            <article class="idea-card">
+                                <div class="idea-number">01</div>
+                                <div class="idea-main">
+                                    <span class="idea-category">Local action</span>
+                                    <h3>Tool Sharing Workshop</h3>
+                                    <p>A practical community idea to share tools and repair skills.</p>
+                                    <small>Shared by TEST Contributor</small>
+                                </div>
+                                <button type="button" class="vote-button voted" data-votes="3" aria-pressed="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+                                    <strong class="vote-count">3</strong><span>support</span>
+                                </button>
+                            </article>
+                            <article class="idea-card">
+                                <div class="idea-number">02</div>
+                                <div class="idea-main">
+                                    <span class="idea-category">Community care</span>
+                                    <h3>Neighbourhood Pantry</h3>
+                                    <p>A small, shared pantry where neighbours can leave or take essential food items.</p>
+                                    <small>Shared by Kindred community</small>
+                                </div>
+                                <button class="vote-button" data-votes="5" aria-pressed="false" type="button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+                                    <strong class="vote-count">5</strong><span>support</span>
+                                </button>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <footer class="footer page-width">
+                <a class="brand" href="#top">
+                    <span class="brand-mark" aria-hidden="true">✳</span>
+                    <span>Kindred<br><em>Hearts &amp; Hands</em></span>
+                </a>
+                <span>Small acts. Shared impact.</span>
+                <span>Made for people who care.</span>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Shared modal used by the idea and opportunity buttons. -->
+    <div class="modal" id="actionModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-content">
+            <button type="button" id="modalClose" aria-label="Close dialog" style="float:right;border:0;background:none;font-size:24px;line-height:1;color:var(--muted)">×</button>
+            <h3 id="modalTitle">Share an idea</h3>
+            <p id="modalDescription" style="font-size:13px;line-height:1.6;color:var(--muted)">Tell the community what we could try next.</p>
+            <form id="actionForm">
+                <div id="ideaFields">
+                    <div class="modal-field">
+                        <label for="ideaTitle">Idea title</label>
+                        <input id="ideaTitle" name="ideaTitle" maxlength="80" placeholder="e.g. Neighbourhood book swap" required>
+                    </div>
+                    <div class="modal-field">
+                        <label for="ideaCategory">Category</label>
+                        <select id="ideaCategory" name="ideaCategory" required>
+                            <option value="Local action">Local action</option>
+                            <option value="Community care">Community care</option>
+                            <option value="Education">Education</option>
+                            <option value="Environment">Environment</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="modal-field">
+                        <label for="ideaDescription">Tell us a little more</label>
+                        <textarea id="ideaDescription" name="ideaDescription" rows="3" maxlength="500" placeholder="What would the idea involve?" required></textarea>
+                    </div>
+                    <div class="modal-field">
+                        <label for="ideaContributor">Your name</label>
+                        <input id="ideaContributor" name="ideaContributor" maxlength="60" placeholder="Name or nickname" required>
+                    </div>
+                </div>
+                <div id="signupFields" hidden>
+                    <p id="selectedOpportunity" style="font-weight:700;color:var(--green)"></p>
+                    <div class="modal-field">
+                        <label for="signupName">Your name</label>
+                        <input id="signupName" name="signupName" maxlength="80" placeholder="Full name">
+                    </div>
+                    <div class="modal-field">
+                        <label for="signupEmail">Email address</label>
+                        <input id="signupEmail" name="signupEmail" type="email" maxlength="120" placeholder="you@example.com">
+                    </div>
+                    <div class="modal-field">
+                        <label for="signupNote">Anything we should know? (optional)</label>
+                        <textarea id="signupNote" name="signupNote" rows="2" maxlength="500" placeholder="Availability, questions, or access needs"></textarea>
+                    </div>
+                </div>
+                <p id="formMessage" role="status" style="font-size:12px;line-height:1.5;color:var(--green)" hidden></p>
+                <div class="modal-actions">
+                    <button type="button" class="button button-quiet" id="modalCancel">Cancel</button>
+                    <button type="submit" class="button button-dark" id="modalSubmit">Submit idea</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+    (() => {
+        "use strict";
+
+        const modal = document.getElementById("actionModal");
+        const form = document.getElementById("actionForm");
+        const modalTitle = document.getElementById("modalTitle");
+        const modalDescription = document.getElementById("modalDescription");
+        const ideaFields = document.getElementById("ideaFields");
+        const signupFields = document.getElementById("signupFields");
+        const selectedOpportunity = document.getElementById("selectedOpportunity");
+        const submitButton = document.getElementById("modalSubmit");
+        const formMessage = document.getElementById("formMessage");
+        let modalMode = "idea";
+        let lastFocusedElement = null;
+
+        function openModal(mode, opportunity = "") {
+            modalMode = mode;
+            lastFocusedElement = document.activeElement;
+            form.reset();
+            formMessage.hidden = true;
+            formMessage.textContent = "";
+
+            const isSignup = mode === "signup";
+            ideaFields.hidden = isSignup;
+            signupFields.hidden = !isSignup;
+            document.getElementById("ideaTitle").required = !isSignup;
+            document.getElementById("ideaDescription").required = !isSignup;
+            document.getElementById("ideaContributor").required = !isSignup;
+            document.getElementById("signupName").required = isSignup;
+            document.getElementById("signupEmail").required = isSignup;
+
+            modalTitle.textContent = isSignup ? "Join an opportunity" : "Plant an idea";
+            modalDescription.textContent = isSignup
+                ? "Leave your contact details to register your interest. This demo does not send data to a server."
+                : "Share a practical idea with the Kindred community.";
+            selectedOpportunity.textContent = opportunity;
+            submitButton.textContent = isSignup ? "Register interest" : "Submit idea";
+            modal.classList.add("active");
+            modal.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
+            const firstInput = isSignup ? document.getElementById("signupName") : document.getElementById("ideaTitle");
+            firstInput.focus();
+        }
+
+        function closeModal() {
+            modal.classList.remove("active");
+            modal.setAttribute("aria-hidden", "true");
+            document.body.style.overflow = "";
+            if (lastFocusedElement && typeof lastFocusedElement.focus === "function") {
+                lastFocusedElement.focus();
+            }
+        }
+
+        document.addEventListener("click", (event) => {
+            const ideaTrigger = event.target.closest(".trigger-idea-modal");
+            const signupTrigger = event.target.closest(".trigger-signup");
+            const filterButton = event.target.closest(".filter");
+            const voteButton = event.target.closest(".vote-button");
+
+            if (ideaTrigger) {
+                event.preventDefault();
+                openModal("idea");
+                return;
+            }
+            if (signupTrigger) {
+                event.preventDefault();
+                openModal("signup", signupTrigger.dataset.title || "Selected opportunity");
+                return;
+            }
+            if (filterButton) {
+                const category = filterButton.dataset.category;
+                document.querySelectorAll(".filter").forEach((button) => {
+                    const active = button === filterButton;
+                    button.classList.toggle("active", active);
+                    button.setAttribute("aria-pressed", String(active));
+                });
+                document.querySelectorAll(".opportunity-card").forEach((card) => {
+                    card.classList.toggle("hidden", category !== "All" && card.dataset.category !== category);
+                });
+                return;
+            }
+            if (voteButton) {
+                const count = voteButton.querySelector(".vote-count");
+                let votes = Number(voteButton.dataset.votes || count.textContent || 0);
+                const wasVoted = voteButton.classList.contains("voted");
+                votes += wasVoted ? -1 : 1;
+                votes = Math.max(0, votes);
+                voteButton.dataset.votes = String(votes);
+                count.textContent = String(votes);
+                voteButton.classList.toggle("voted", !wasVoted);
+                voteButton.setAttribute("aria-pressed", String(!wasVoted));
+                return;
+            }
+        });
+
+        document.getElementById("menuToggle").addEventListener("click", () => {
+            const nav = document.getElementById("navLinks");
+            const isOpen = nav.classList.toggle("active");
+            document.getElementById("menuToggle").setAttribute("aria-expanded", String(isOpen));
+        });
+
+        document.getElementById("navLinks").addEventListener("click", (event) => {
+            if (event.target.closest("a")) {
+                document.getElementById("navLinks").classList.remove("active");
+                document.getElementById("menuToggle").setAttribute("aria-expanded", "false");
+            }
+        });
+
+        document.getElementById("modalClose").addEventListener("click", closeModal);
+        document.getElementById("modalCancel").addEventListener("click", closeModal);
+        modal.addEventListener("click", (event) => {
+            if (event.target === modal) closeModal();
+        });
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape" && modal.classList.contains("active")) closeModal();
+        });
+
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
+            formMessage.hidden = false;
+
+            if (modalMode === "idea") {
+                const title = document.getElementById("ideaTitle").value.trim();
+                const category = document.getElementById("ideaCategory").value;
+                const description = document.getElementById("ideaDescription").value.trim();
+                const contributor = document.getElementById("ideaContributor").value.trim();
+                if (!title || !description || !contributor) return;
+
+                const card = document.createElement("article");
+                card.className = "idea-card";
+
+                const number = document.createElement("div");
+                number.className = "idea-number";
+                number.textContent = String(document.querySelectorAll(".idea-card").length + 1).padStart(2, "0");
+
+                const main = document.createElement("div");
+                main.className = "idea-main";
+                const categoryEl = document.createElement("span");
+                categoryEl.className = "idea-category";
+                categoryEl.textContent = category;
+                const heading = document.createElement("h3");
+                heading.textContent = title;
+                const paragraph = document.createElement("p");
+                paragraph.textContent = description;
+                const author = document.createElement("small");
+                author.textContent = "Shared by " + contributor;
+                main.append(categoryEl, heading, paragraph, author);
+
+                const vote = document.createElement("button");
+                vote.type = "button";
+                vote.className = "vote-button";
+                vote.dataset.votes = "0";
+                vote.setAttribute("aria-pressed", "false");
+                vote.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg><strong class="vote-count">0</strong><span>support</span>';
+                card.append(number, main, vote);
+                document.getElementById("ideaList").appendChild(card);
+                document.getElementById("ideaCount").textContent = document.querySelectorAll(".idea-card").length;
+                closeModal();
+                document.getElementById("ideas").scrollIntoView({ behavior: "smooth" });
+            } else {
+                // Front-end demo only: no backend or email service is connected.
+                formMessage.textContent = "Your interest has been recorded in this page session only. No information was sent to a server.";
+                submitButton.textContent = "Recorded";
+                submitButton.disabled = true;
+                window.setTimeout(() => {
+                    submitButton.disabled = false;
+                    closeModal();
+                }, 1800);
+            }
+        });
+
+        // Keep the initial vote state and accessibility attributes consistent.
+        document.querySelectorAll(".vote-button").forEach((button) => {
+            button.setAttribute("aria-pressed", String(button.classList.contains("voted")));
+        });
+        document.querySelectorAll(".filter").forEach((button) => {
+            button.setAttribute("aria-pressed", String(button.classList.contains("active")));
+        });
+    })();
+    </script>
+</body>
+</html>

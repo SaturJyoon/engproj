@@ -76,11 +76,9 @@
         .button-accent { background: linear-gradient(135deg, var(--orange), #f59e0b); color: #fff; box-shadow: 0 4px 15px rgba(217,119,6,0.3); }
         .mobile-menu { display: none; background: none; border: 0; color: var(--green); }
         
-        /* Floating background ambient blobs across entire page */
         .ambient-blob { position: absolute; width: 550px; height: 550px; border-radius: 50%; background: radial-gradient(circle, rgba(217,119,6,0.14) 0%, rgba(45,90,39,0.06) 60%, transparent 100%); z-index: 0; pointer-events: none; filter: blur(70px); animation: floatBlob 15s infinite alternate ease-in-out; }
         @keyframes floatBlob { 0% { transform: translate(0, 0) scale(1) rotate(0deg); } 50% { transform: translate(80px, -60px) scale(1.15) rotate(45deg); } 100% { transform: translate(-50px, 90px) scale(0.9) rotate(-30deg); } }
 
-        /* Multi-directional Reveal Animations */
         .reveal-up { opacity: 0; transform: translateY(50px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal-up.active { opacity: 1; transform: translateY(0); }
 
@@ -90,7 +88,6 @@
         .reveal-right { opacity: 0; transform: translateX(50px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal-right.active { opacity: 1; transform: translateX(0); }
 
-        /* Hero Section */
         .hero { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 60px; padding-top: 60px; padding-bottom: 90px; align-items: center; position: relative; z-index: 1; }
         .hero-kicker { color: var(--orange); font-size: 11px; text-transform: uppercase; letter-spacing: .16em; font-weight: 700; display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
         .line { width: 28px; height: 2px; background: linear-gradient(90deg, var(--orange), #f59e0b); animation: pulseLine 3s infinite alternate; }
@@ -163,7 +160,6 @@
         .quiz-result { margin-top: 22px; font-style: italic; color: var(--orange); font-size: 15px; min-height: 30px; font-weight: 500; animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
         @keyframes popIn { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
-        /* GRADIENT ENHANCED JOIN & DONATION SECTIONS */
         .join-wrapper { background: linear-gradient(135deg, var(--card-bg), rgba(45,90,39,0.04)); border: 1px solid var(--line); border-radius: 16px; padding: 50px; box-shadow: 0 15px 40px rgba(0,0,0,0.06); margin-top: 30px; position: relative; overflow: hidden; }
         .join-wrapper::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: linear-gradient(90deg, var(--green), var(--orange)); }
         
@@ -223,7 +219,6 @@
 
         #confettiCanvas { position: fixed; inset: 0; pointer-events: none; z-index: 9999; }
 
-        /* GRADIENT ENHANCED CLOSING SECTION */
         .closing-section { background: linear-gradient(135deg, var(--green), #1a3617); color: #fff; text-align: center; padding: 120px 20px; margin-top: 60px; transition: background-color 0.5s ease; position: relative; overflow: hidden; box-shadow: inset 0 20px 40px rgba(0,0,0,0.2); }
         .closing-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at center, rgba(217,119,6,0.25) 0%, transparent 70%); pointer-events: none; }
         .closing-section h2 { color: #fff; font-size: clamp(36px, 4.5vw, 58px); margin-bottom: 15px; animation: pulseGlow 4s infinite alternate; }
@@ -300,10 +295,10 @@
             <!-- LIVE STATS TICKER BAR -->
             <div class="impact-ticker reveal-up">
                 <div class="page-width ticker-grid">
-                    <div class="ticker-item"><strong class="counter" data-target="1420">0</strong><span>Volunteers Mobilized</span></div>
-                    <div class="ticker-item"><strong class="counter" data-target="85">0</strong><span>Projects Completed</span></div>
-                    <div class="ticker-item"><strong class="counter" data-target="34">0</strong><span>Indonesian Cities</span></div>
-                    <div class="ticker-item"><strong class="counter" data-target="100">0</strong><span>% Passion Driven</span></div>
+                    <div class="ticker-item"><strong class="counter" data-target="1420" id="volunteerCounter">1420</strong><span>Volunteers Mobilized</span></div>
+                    <div class="ticker-item"><strong class="counter" data-target="85">85</strong><span>Projects Completed</span></div>
+                    <div class="ticker-item"><strong class="counter" data-target="34">34</strong><span>Indonesian Cities</span></div>
+                    <div class="ticker-item"><strong class="counter" data-target="100">100</strong><span>% Passion Driven</span></div>
                 </div>
             </div>
 
@@ -636,7 +631,7 @@
                             <img alt="Nicole original photograph" src="nicole.jpeg">
                         </div>
                         <h3>Nicole</h3>
-                        <span class="profile-role">Head of Project Management Department</span>
+                        <span class="profile-role">Team Member</span>
                         <p>Responsible for researching information, collecting relevant facts, and contributing to overall project development.</p>
                     </div>
                     <div class="profile-card reveal-up" style="transition-delay: 0.3s;">
@@ -644,7 +639,7 @@
                             <img alt="Michelle original photograph" src="michelle.jpeg">
                         </div>
                         <h3>Michelle</h3>
-                        <span class="profile-role">Head of Quality Control Department</span>
+                        <span class="profile-role">Team Member</span>
                         <p>Responsible for checking grammar and ensuring all website sections function smoothly.</p>
                     </div>
                     <div class="profile-card reveal-up" style="transition-delay: 0.4s;">
@@ -652,7 +647,7 @@
                             <img alt="Giselle original photograph" src="giselle.jpeg">
                         </div>
                         <h3>Giselle</h3>
-                        <span class="profile-role">Head of Public Relations Department</span>
+                        <span class="profile-role">Team Member</span>
                         <p>Responsible for content coordination, gathering examples, and preparing the group oral presentation.</p>
                     </div>
                 </div>
@@ -813,32 +808,19 @@
             joinForm.reset();
         });
 
-        // Animated Counters for Ticker
-        const counters = document.querySelectorAll('.counter');
-        let animated = false;
-        
-        window.addEventListener('scroll', () => {
-            const scrollPos = window.scrollY + window.innerHeight;
-            const tickerElem = document.querySelector('.impact-ticker');
-            if (tickerElem && !animated && scrollPos > tickerElem.offsetTop) {
-                counters.forEach(counter => {
-                    const target = +counter.getAttribute('data-target');
-                    let count = 0;
-                    const speed = target / 40;
-                    const updateCount = () => {
-                        count += speed;
-                        if (count < target) {
-                            counter.innerText = Math.ceil(count);
-                            setTimeout(updateCount, 30);
-                        } else {
-                            counter.innerText = target;
-                        }
-                    };
-                    updateCount();
-                });
-                animated = true;
-            }
-        });
+        // Live Incrementing Counter for Volunteers Mobilized (Increments by 1 or 2 every 2 seconds)
+        let currentVolunteers = 1420;
+        const volunteerCounterEl = document.getElementById("volunteerCounter");
+        setInterval(() => {
+            const increment = Math.random() < 0.5 ? 1 : 2;
+            currentVolunteers += increment;
+            volunteerCounterEl.textContent = currentVolunteers;
+            // Add a subtle pop animation class
+            volunteerCounterEl.style.transform = "scale(1.08)";
+            setTimeout(() => {
+                volunteerCounterEl.style.transform = "scale(1)";
+            }, 300);
+        }, 2000);
 
         // Multi-directional Scroll Reveal Observer
         const revealSelectors = document.querySelectorAll(".reveal-up, .reveal-left, .reveal-right");

@@ -72,6 +72,30 @@
         .profile-role { color: var(--orange); font-size: 10px; text-transform: uppercase; letter-spacing: .1em; font-weight: 700; margin-bottom: 10px; display: block; }
         .profile-card p { font-size: 12px; color: var(--muted); padding: 0 15px; line-height: 1.5; }
 
+        /* Ideas Board Styles */
+        .ideas-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 50px; margin-top: 40px; }
+        .idea-list { border-top: 1px solid var(--line); }
+        .idea-card { display: grid; grid-template-columns: 49px 1fr auto; gap: 20px; padding: 25px 0; border-bottom: 1px solid var(--line); align-items: start; background: #fff; margin-bottom: 10px; padding: 20px; border-radius: 8px; border: 1px solid var(--line); }
+        .idea-number { font: italic 19px 'Playfair Display', serif; color: #a4b69d; }
+        .idea-category { font-size: 9px; color: var(--orange); text-transform: uppercase; letter-spacing: .12em; font-weight: 700; }
+        .idea-main h3 { font: 500 22px 'Playfair Display', serif; color: var(--green); margin: 8px 0 7px; }
+        .idea-main p { font-size: 12px; color: var(--muted); margin-bottom: 10px; line-height: 1.45; }
+        .idea-main small { font-size: 10px; color: #889187; }
+        .vote-button { border: 1px solid var(--line); background: transparent; color: #8d978b; min-width: 59px; padding: 8px 7px; display: flex; align-items: center; gap: 4px; flex-wrap: wrap; justify-content: center; transition: .2s; border-radius: 4px; }
+        .vote-button strong { font-size: 12px; }
+        .vote-button span { font-size: 8px; width: 100%; }
+        .vote-button:hover, .vote-button.voted { border-color: var(--orange); color: var(--orange); }
+
+        /* Modal styling */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; place-items: center; padding: 20px; }
+        .modal.active { display: grid; }
+        .modal-content { background: var(--sand); padding: 30px; border-radius: 8px; max-width: 500px; width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .modal-content h3 { font-family: 'Playfair Display', serif; color: var(--green); font-size: 24px; margin-bottom: 15px; }
+        .modal-field { margin-bottom: 15px; }
+        .modal-field label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 5px; color: var(--ink); }
+        .modal-field input, .modal-field textarea, .modal-field select { width: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 4px; background: #fff; }
+        .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+
         .closing-section { background: var(--green); color: #fff; text-align: center; padding: 100px 20px; margin-top: 60px; }
         .closing-section h2 { color: #fff; font-size: clamp(36px, 4vw, 56px); margin-bottom: 15px; }
         .closing-section p { color: #c2d3bd; font-size: 15px; max-width: 600px; margin: 0 auto 30px; line-height: 1.7; }
@@ -80,6 +104,7 @@
 
         @media(max-width: 1024px) {
             .profile-grid { grid-template-columns: repeat(2, 1fr); }
+            .ideas-layout { grid-template-columns: 1fr; }
         }
         @media(max-width: 900px) {
             .hero { grid-template-columns: 1fr; gap: 40px; }
@@ -105,6 +130,7 @@
                 <a href="#organised">Organised</a>
                 <a href="#local">Local</a>
                 <a href="#international">International</a>
+                <a href="#ideas">Ideas Board</a>
                 <a href="#about">About Us</a>
                 <a href="#closing">Final Message</a>
             </nav>
@@ -117,7 +143,10 @@
                     <div class="hero-kicker"><span class="line"></span>Volunteer Today, Change Tomorrow!</div>
                     <h1>Small Actions.<br><em>Big Impact. A Better World.</em></h1>
                     <p class="hero-lede">Welcome to our website! Volunteering is an important way to contribute to society, help others, and create positive changes in our communities. Through volunteering, people can develop valuable skills, build relationships, and become more responsible citizens. We invite you to explore meaningful opportunities and make a difference.</p>
-                    <a href="#organised" class="button button-dark">Explore Volunteering Activities</a>
+                    <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+                        <a href="#organised" class="button button-dark">Explore Activities</a>
+                        <button class="button button-accent trigger-idea-modal">Share an Idea</button>
+                    </div>
                 </div>
                 <div class="hero-visual">
                     <img alt="Volunteers working together" src="https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&w=800&q=80">
@@ -235,6 +264,54 @@
                 </div>
             </section>
 
+            <!-- IDEAS BOARD SECTION -->
+            <section id="ideas" class="section page-width">
+                <div class="section-header" style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 20px;">
+                    <div>
+                        <span class="eyebrow">Community Board</span>
+                        <h2>The Idea Garden</h2>
+                        <p class="hero-lede" style="margin-bottom: 0;">Share and vote on new community volunteering initiatives.</p>
+                    </div>
+                    <button class="button button-accent trigger-idea-modal">Plant an Idea</button>
+                </div>
+                <div class="ideas-layout">
+                    <div>
+                        <p style="font: italic 17px/1.35 'Playfair Display', serif; color: var(--green);"><strong>Every idea matters.</strong><br>Browse what our community is imagining, then add your voice or support your favorites.</p>
+                        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-top: 20px;">
+                            <strong id="ideaCount" style="color: var(--orange); font-size: 24px; font-family: 'Playfair Display', serif; margin-right: 6px;">2</strong> ideas growing
+                        </div>
+                    </div>
+                    <div class="idea-list" id="ideaList">
+                        <article class="idea-card">
+                            <div class="idea-number">01</div>
+                            <div class="idea-main">
+                                <span class="idea-category">Local Action</span>
+                                <h3>Tool Sharing Workshop</h3>
+                                <p>A practical community initiative to share tools and repair skills among neighbors.</p>
+                                <small>Shared by Iorel</small>
+                            </div>
+                            <button type="button" class="vote-button voted" data-votes="3" aria-pressed="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+                                <strong class="vote-count">3</strong><span>support</span>
+                            </button>
+                        </article>
+                        <article class="idea-card">
+                            <div class="idea-number">02</div>
+                            <div class="idea-main">
+                                <span class="idea-category">Community Care</span>
+                                <h3>Neighborhood Pantry</h3>
+                                <p>A small, shared pantry where neighbors can leave or take essential food items.</p>
+                                <small>Shared by Nicole</small>
+                            </div>
+                            <button type="button" class="vote-button" data-votes="5" aria-pressed="false">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+                                <strong class="vote-count">5</strong><span>support</span>
+                            </button>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
             <!-- 5. ABOUT US - GROUP PROFILE -->
             <section id="about" class="section page-width">
                 <div class="section-header">
@@ -245,7 +322,7 @@
                 <div class="profile-grid">
                     <div class="profile-card">
                         <div class="profile-photo">
-                            <img alt="Iorel original photograph" src=iorel.jpeg>
+                            <img alt="Iorel original photograph" src="iorel.jpeg">
                         </div>
                         <h3>Iorel</h3>
                         <span class="profile-role">Head of Technical Department</span>
@@ -253,7 +330,7 @@
                     </div>
                     <div class="profile-card">
                         <div class="profile-photo">
-                            <img alt="Nicole original photograph" src=nicole.jpeg>
+                            <img alt="Nicole original photograph" src="nicole.jpeg">
                         </div>
                         <h3>Nicole</h3>
                         <span class="profile-role">Team Member</span>
@@ -261,7 +338,7 @@
                     </div>
                     <div class="profile-card">
                         <div class="profile-photo">
-                            <img alt="Michelle original photograph" src=michelle.jpeg>
+                            <img alt="Michelle original photograph" src="michelle.jpeg">
                         </div>
                         <h3>Michelle</h3>
                         <span class="profile-role">Team Member</span>
@@ -269,7 +346,7 @@
                     </div>
                     <div class="profile-card">
                         <div class="profile-photo">
-                            <img alt="Giselle original photograph" src=giselle.jpeg>
+                            <img alt="Giselle original photograph" src="giselle.jpeg">
                         </div>
                         <h3>Giselle</h3>
                         <span class="profile-role">Team Member</span>
@@ -294,6 +371,43 @@
         </footer>
     </div>
 
+    <!-- Idea Submission Modal -->
+    <div class="modal" id="actionModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-content">
+            <button type="button" id="modalClose" aria-label="Close dialog" style="float:right;border:0;background:none;font-size:24px;line-height:1;color:var(--muted)">×</button>
+            <h3 id="modalTitle">Share an idea</h3>
+            <p id="modalDescription" style="font-size:13px;line-height:1.6;color:var(--muted)">Tell the community what we could try next.</p>
+            <form id="actionForm">
+                <div class="modal-field">
+                    <label for="ideaTitle">Idea title</label>
+                    <input id="ideaTitle" name="ideaTitle" maxlength="80" placeholder="e.g. Neighbourhood book swap" required>
+                </div>
+                <div class="modal-field">
+                    <label for="ideaCategory">Category</label>
+                    <select id="ideaCategory" name="ideaCategory" required>
+                        <option value="Local Action">Local Action</option>
+                        <option value="Community Care">Community Care</option>
+                        <option value="Education">Education</option>
+                        <option value="Environment">Environment</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="modal-field">
+                    <label for="ideaDescription">Tell us a little more</label>
+                    <textarea id="ideaDescription" name="ideaDescription" rows="3" maxlength="500" placeholder="What would the idea involve?" required></textarea>
+                </div>
+                <div class="modal-field">
+                    <label for="ideaContributor">Your name</label>
+                    <input id="ideaContributor" name="ideaContributor" maxlength="60" placeholder="Name or nickname" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="button button-dark" style="background:transparent; color:var(--muted);" id="modalCancel">Cancel</button>
+                    <button type="submit" class="button button-dark" id="modalSubmit">Submit Idea</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
     (() => {
         "use strict";
@@ -310,6 +424,98 @@
                 navLinks.classList.remove("active");
                 menuToggle.setAttribute("aria-expanded", "false");
             }
+        });
+
+        // Modal and Posting functionality
+        const modal = document.getElementById("actionModal");
+        const form = document.getElementById("actionForm");
+
+        function openModal() {
+            form.reset();
+            modal.classList.add("active");
+            modal.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
+            document.getElementById("ideaTitle").focus();
+        }
+
+        function closeModal() {
+            modal.classList.remove("active");
+            modal.setAttribute("aria-hidden", "true");
+            document.body.style.overflow = "";
+        }
+
+        document.querySelectorAll(".trigger-idea-modal").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                e.preventDefault();
+                openModal();
+            });
+        });
+
+        document.getElementById("modalClose").addEventListener("click", closeModal);
+        document.getElementById("modalCancel").addEventListener("click", closeModal);
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) closeModal();
+        });
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && modal.classList.contains("active")) closeModal();
+        });
+
+        // Vote functionality and dynamic posting
+        document.addEventListener("click", (e) => {
+            const voteButton = e.target.closest(".vote-button");
+            if (voteButton) {
+                const count = voteButton.querySelector(".vote-count");
+                let votes = Number(voteButton.dataset.votes || count.textContent || 0);
+                const wasVoted = voteButton.classList.contains("voted");
+                votes += wasVoted ? -1 : 1;
+                votes = Math.max(0, votes);
+                voteButton.dataset.votes = String(votes);
+                count.textContent = String(votes);
+                voteButton.classList.toggle("voted", !wasVoted);
+            }
+        });
+
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const title = document.getElementById("ideaTitle").value.trim();
+            const category = document.getElementById("ideaCategory").value;
+            const description = document.getElementById("ideaDescription").value.trim();
+            const contributor = document.getElementById("ideaContributor").value.trim();
+            if (!title || !description || !contributor) return;
+
+            const card = document.createElement("article");
+            card.className = "idea-card";
+
+            const number = document.createElement("div");
+            number.className = "idea-number";
+            const currentCount = document.querySelectorAll(".idea-card").length + 1;
+            number.textContent = String(currentCount).padStart(2, "0");
+
+            const main = document.createElement("div");
+            main.className = "idea-main";
+            const categoryEl = document.createElement("span");
+            categoryEl.className = "idea-category";
+            categoryEl.textContent = category;
+            const heading = document.createElement("h3");
+            heading.textContent = title;
+            const paragraph = document.createElement("p");
+            paragraph.textContent = description;
+            const author = document.createElement("small");
+            author.textContent = "Shared by " + contributor;
+            main.append(categoryEl, heading, paragraph, author);
+
+            const vote = document.createElement("button");
+            vote.type = "button";
+            vote.className = "vote-button";
+            vote.dataset.votes = "0";
+            vote.setAttribute("aria-pressed", "false");
+            vote.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg><strong class="vote-count">0</strong><span>support</span>';
+            
+            card.append(number, main, vote);
+            document.getElementById("ideaList").appendChild(card);
+            document.getElementById("ideaCount").textContent = currentCount;
+            closeModal();
+            document.getElementById("ideas").scrollIntoView({ behavior: "smooth" });
         });
     })();
     </script>
